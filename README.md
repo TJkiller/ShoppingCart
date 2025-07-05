@@ -15,7 +15,7 @@ A Python-based shopping cart application demonstrating core programming concepts
 1. Ensure Python 3.6+ is installed
 2. Clone the repository:
    ```bash
-   git clone https://github.com/Tjkiller/ShoppingCart.git
+   git clone https://github.com/TJkiller/ShoppingCart.git
    ```
 3. Navigate to project directory:
    ```bash
@@ -23,7 +23,7 @@ A Python-based shopping cart application demonstrating core programming concepts
    ```
 4. Execute the program:
    ```bash
-   python shopping_cart.py
+   python cart.py
    ```
 
 ## Program Walkthrough with Screenshots
