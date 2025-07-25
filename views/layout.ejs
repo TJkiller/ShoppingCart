@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart - <%= title %></title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Shopping Cart Program</h1>
+      <p class="db-info">PostgreSQL Database Powered</p>
+    </header>
+    
+    <% if (messages.error) { %>
+      <div class="flash error"><%= messages.error %></div>
+    <% } %>
+    <% if (messages.success) { %>
+      <div class="flash success"><%= messages.success %></div>
+    <% } %>
+    <% if (messages.info) { %>
+      <div class="flash info"><%= messages.info %></div>
+    <% } %>
+    
+    <main>
+      <%- body %>
+    </main>
+  </div>
+</body>
+</html>
