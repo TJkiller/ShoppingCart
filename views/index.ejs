@@ -1,31 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Shopping Cart Program</h1>
-        </header>
-        
-        <!-- Flash messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash {{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-        
-        <main>
-            {% block content %}{% endblock %}
-        </main>
-    </div>
-</body>
-</html>
+<% layout('layout', { title: 'Your Cart', messages }) %>
+
+<div class="cart-actions">
+  <a href="/add" class="btn">Add Item</a>
+  <% if (cart.length > 0) { %>
+    <a href="/checkout" class="btn checkout">Checkout</a>
+  <% } %>
+</div>
+
+<% if (cart.length > 0) { %>
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Item</th>
+        <th class="price">Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% cart.forEach((item, index) => { %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%- item.product %></td>
+          <td class="price">R<%= item.price.toFixed(2) %></td>
+          <td class="actions">
+            <a href="/edit/<%= item.id %>" class="btn edit">Edit</a>
+            <a href="/remove/<%= item.id %>" class="btn remove">Remove</a>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2" class="total-label">TOTAL:</td>
+        <td class="price total">R<%= total.toFixed(2) %></td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+<% } else { %>
+  <div class="empty-cart">
+    <p>Your cart is empty.</p>
+  </div>
+<% } %>
+
+<% if (checkout && receiptCart) { %>
+  <div class="receipt">
+    <h2>Checkout - Final Receipt</h2>
+    <table class="receipt-table">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Item</th>
+          <th class="price">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% receiptCart.forEach((item, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%- item.product %></td>
+            <td class="price">R<%= item.price.toFixed(2) %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" class="total-label">TOTAL:</td>
+          <td class="price total">R<%= receiptTotal.toFixed(2) %></td>
+        </tr>
+      </tfoot>
+    </table>
+    <p class="thank-you">Thank you for your purchase!</p>
+  </div>
+<% } %>
